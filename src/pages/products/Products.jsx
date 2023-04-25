@@ -3,19 +3,23 @@ import './products.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { addProducts } from '../../redux/action'
 import PizzaCard from '../../components/pizzacard/PizzaCard'
+import LoadingIcon from '../../assets/loading_icon.gif'
 
 const Products = () => {
   const dispatch = useDispatch()
   const productList = useSelector(state => state.productList)
   const [filter, setFilter] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
-
+  const [loading, setLoading] = useState(false)
+ 
   const getData = async () => {
+    setLoading(true)
     const res = await fetch('https://run.mocky.io/v3/ec196a02-aaf4-4c91-8f54-21e72f241b68', {
       method: 'GET'
     })
     const data = await res.json()
     dispatch(addProducts(data))
+    setLoading(false)
   }
 
   function handleFilter(event) {
@@ -39,7 +43,7 @@ const Products = () => {
           </select>
         </div>
       </header>
-      <div className='product-container'>
+      {false ? <div className='product-container'>
         {productList.sort((a, b) => a[filter] - b[filter]).filter((val) => {
             if (searchTerm === '') {
               return val;
@@ -47,7 +51,8 @@ const Products = () => {
               return val;
             }
           }).map(product => <PizzaCard {...product} key={product.id} />)}
-      </div>
+      </div> :
+      <img src={LoadingIcon} alt='loading icon' className='loading-icon'/>}
     </section>
   )
 }
