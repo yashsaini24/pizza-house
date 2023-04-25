@@ -43,7 +43,7 @@ const Products = () => {
           </select>
         </div>
       </header>
-      {false ? <div className='product-container'>
+      {!loading ? <div className='product-container'>
         {productList.sort((a, b) => a[filter] - b[filter]).filter((val) => {
             if (searchTerm === '') {
               return val;
