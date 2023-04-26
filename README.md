@@ -1,4 +1,4 @@
-# Accordion
+# Pizza House
 - Online Pizza Ordering Application
 
 ## 🚀 Features
